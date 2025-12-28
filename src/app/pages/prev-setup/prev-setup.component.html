@@ -1,0 +1,71 @@
+<div class="app-shell">
+  <div class="page">
+    <header class="top">
+      <button class="btn-ghost" type="button" (click)="volver()">←</button>
+
+      <div class="top-title">
+        <div class="badge">CONFIG</div>
+        <div class="h1">PREV SETUP</div>
+        <div class="subtitle">Define jugadores e impostores</div>
+      </div>
+    </header>
+
+    <section class="card">
+      <label class="field">
+        <span class="label">Número de jugadores</span>
+        <input
+          class="input"
+          type="number"
+          min="3"
+          max="20"
+          [(ngModel)]="playersCount"
+          (ngModelChange)="syncNames()"
+        />
+      </label>
+
+      <label class="field">
+        <span class="label">Número de impostores</span>
+        <input
+          class="input"
+          type="number"
+          min="1"
+          [max]="maxImpostors"
+          [(ngModel)]="impostorsCount"
+        />
+        <small class="hint">Máx: {{ maxImpostors }}</small>
+      </label>
+
+      <div class="toggle">
+        <div class="label">¿Definir nombres?</div>
+        <button class="btn-mini" type="button" (click)="toggleNames()">
+          {{ useNames ? 'No' : 'Sí' }}
+        </button>
+      </div>
+
+      <div *ngIf="useNames" class="names">
+        <div class="names-title">Nombres de jugadores</div>
+
+        <div class="names-grid">
+         <input
+  *ngFor="let n of playerNames; let i = index; trackBy: trackByIndex"
+  class="input"
+  type="text"
+  [placeholder]="'Jugador ' + (i + 1)"
+  [(ngModel)]="playerNames[i]"
+  [ngModelOptions]="{ standalone: true }"
+  maxlength="20"
+/>
+
+        </div>
+      </div>
+
+      <button class="btn-primary" type="button" (click)="guardarYContinuar()">
+        CONTINUAR
+      </button>
+    </section>
+
+    <footer class="footer">
+      La configuración se guardará para iniciar la misión.
+    </footer>
+  </div>
+</div>

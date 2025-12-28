@@ -1,0 +1,100 @@
+<div class="app-shell">
+    <div class="page">
+
+        <header class="top">
+            <div class="top-left">
+                <div class="badge">MISIÓN</div>
+                <div class="h1">RONDA {{ round }}</div>
+            </div>
+
+            <button class="btn-ghost danger" type="button" (click)="finalizarJuego()">
+                Finalizar
+            </button>
+        </header>
+
+        <!-- 1) Inicio de ronda -->
+        <section *ngIf="screen === 'roundStart'" class="card center">
+            <div class="title-big">Iniciar ronda {{ round }}</div>
+            <div class="subtitle">Pasa el celular al primer jugador.</div>
+
+            <button class="btn-primary" type="button" (click)="irARevelarJugadores()">
+                COMENZAR
+            </button>
+        </section>
+
+        <!-- 2) Reveal por jugador (cortina) -->
+        <section *ngIf="screen === 'playerReveal'" class="card reveal">
+            <div class="player-chip">
+                {{ current.label }}
+                <span class="player-index">({{ playerIndex + 1 }}/{{ assignments.length }})</span>
+            </div>
+
+            <div class="hint-swipe">
+                Desliza hacia arriba para ver tu palabra
+            </div>
+
+        <div
+  class="reveal-box"
+  (pointerdown)="onPointerDown($event)"
+  (pointermove)="onPointerMove($event)"
+  (pointerup)="onPointerUp($event)"
+  (pointercancel)="onPointerUp($event)"
+>
+
+
+                <!-- TEXTO DE AYUDA (cuando aún no revela) -->
+                <div class="placeholder" *ngIf="revealProgress < 0.25">
+                    ▲ Desliza para revelar
+                </div>
+
+                <!-- SECRETO: solo aparece cuando ya reveló lo suficiente -->
+                <div class="secret" *ngIf="revealProgress >= 0.25" [class.impostor]="current.isImpostor"
+                    [style.opacity]="secretOpacity">
+                    {{ current.roleText }}
+                </div>
+
+                <!-- CORTINA -->
+                <div class="curtain" [style.transform]="'translateY(' + curtainTranslateY + '%)'"></div>
+
+            </div>
+
+<button
+  class="btn-primary"
+  type="button"
+  [disabled]="!canConfirm"
+  (pointerup)="confirmSeen()"
+>
+  YA VI
+</button>
+
+
+
+        </section>
+
+        <!-- 3) Todos listos -->
+        <section *ngIf="screen === 'roundReady'" class="card center">
+            <div class="title-big">¡Todos listos!</div>
+            <div class="subtitle">Ahora comienza la discusión.</div>
+
+            <button class="btn-primary" type="button" (click)="iniciarRonda()">
+                INICIAR RONDA
+            </button>
+        </section>
+
+        <!-- 4) Reloj + siguiente ronda -->
+        <section *ngIf="screen === 'clock'" class="card center">
+            <div class="clock">🕒</div>
+            <div class="title-big">Ronda en curso</div>
+            <div class="subtitle">Cuando termine, pasa a la siguiente ronda.</div>
+
+            <button class="btn-primary" type="button" (click)="siguienteRonda()">
+                SIGUIENTE RONDA
+            </button>
+        </section>
+
+        <footer class="footer">
+            Palabras no se repiten (hasta agotarse).
+        </footer>
+
+    </div>
+</div>
