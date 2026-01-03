@@ -160,3 +160,46 @@
 .btn-primary {
   width: 100%;
 }
+/* =========================
+   SELECT (Categoría) con estilo
+   ========================= */
+
+/* 1) Quitar estilo nativo + flecha custom */
+select.input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  cursor: pointer;
+
+  /* espacio para la flecha */
+  padding-right: 44px;
+
+  /* flecha custom (verde) */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%2300ffaa' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 18px 18px;
+}
+
+/* 2) En iOS, a veces queda el texto gris: fuerza color */
+select.input {
+  color: #e8f0ff;
+}
+
+/* 3) Estilo del dropdown (limitado por el navegador, pero ayuda) */
+select.input option {
+  background: #0a0e16; /* oscuro */
+  color: #e8f0ff;
+}
+
+/* 4) Hover sutil (opcional) */
+select.input:hover {
+  border-color: rgba(0, 255, 170, 0.30);
+  background: rgba(0, 0, 0, 0.28);
+}
+
+/* 5) Evita que Edge/IE pongan su flecha encima (por si acaso) */
+select.input::-ms-expand {
+  display: none;
+}

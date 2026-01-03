@@ -26,7 +26,7 @@ export class GameComponent {
   assignments: Assignment[] = [];
   screen: Screen = 'roundStart';
   playerIndex = 0;
-
+speakerStartIndex = 0;
   // ===== Reveal tipo cortina (sin leaks) =====
   revealProgress = 0;     // 0..1
   isRevealing = false;    // el secreto solo existe si true
@@ -62,12 +62,15 @@ export class GameComponent {
     const r = this.engine.createRound(this.setup);
     this.round = r.round;
     this.assignments = r.assignments;
-
+ // ✅ el que empieza a hablar se define por ronda (random)
+  this.speakerStartIndex = Math.floor(Math.random() * this.assignments.length);
     this.screen = 'roundStart';
     this.playerIndex = 0;
     this.resetReveal();
   }
-
+get speakerStartLabel(): string {
+  return this.assignments?.[this.speakerStartIndex]?.label ?? 'Jugador 1';
+}
   irARevelarJugadores() {
     this.screen = 'playerReveal';
     this.playerIndex = 0;
@@ -139,6 +142,10 @@ export class GameComponent {
 
     requestAnimationFrame(step);
   }
+
+  get selectedCategory(): string {
+  return this.setup?.category || '—';
+}
 
   confirmSeen() {
     // pasa al siguiente jugador o termina

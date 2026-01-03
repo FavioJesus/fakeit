@@ -4,6 +4,7 @@ export type GameSetup = {
   playersCount: number;
   impostorsCount: number;
   playerNames: string[]; // opcional, puede ir vacío
+   category?: string;
 };
 
 @Injectable({ providedIn: 'root' })

@@ -5,6 +5,7 @@
             <div class="top-left">
                 <div class="badge">MISIÓN</div>
                 <div class="h1">RONDA {{ round }}</div>
+                <div class="subtitle">Categoría: {{ selectedCategory }}</div>
             </div>
 
             <button class="btn-ghost danger" type="button" (click)="finalizarJuego()">
@@ -33,13 +34,8 @@
                 Desliza hacia arriba para ver tu palabra
             </div>
 
-        <div
-  class="reveal-box"
-  (pointerdown)="onPointerDown($event)"
-  (pointermove)="onPointerMove($event)"
-  (pointerup)="onPointerUp($event)"
-  (pointercancel)="onPointerUp($event)"
->
+            <div class="reveal-box" (pointerdown)="onPointerDown($event)" (pointermove)="onPointerMove($event)"
+                (pointerup)="onPointerUp($event)" (pointercancel)="onPointerUp($event)">
 
 
                 <!-- TEXTO DE AYUDA (cuando aún no revela) -->
@@ -58,14 +54,9 @@
 
             </div>
 
-<button
-  class="btn-primary"
-  type="button"
-  [disabled]="!canConfirm"
-  (pointerup)="confirmSeen()"
->
-  YA VI
-</button>
+            <button class="btn-primary" type="button" [disabled]="!canConfirm" (pointerup)="confirmSeen()">
+                YA VI
+            </button>
 
 
 
@@ -74,6 +65,9 @@
         <!-- 3) Todos listos -->
         <section *ngIf="screen === 'roundReady'" class="card center">
             <div class="title-big">¡Todos listos!</div>
+            <div class="subtitle">
+                Empieza dando pistas: <b>{{ speakerStartLabel }}</b>
+            </div>
             <div class="subtitle">Ahora comienza la discusión.</div>
 
             <button class="btn-primary" type="button" (click)="iniciarRonda()">
@@ -85,6 +79,9 @@
         <section *ngIf="screen === 'clock'" class="card center">
             <div class="clock">🕒</div>
             <div class="title-big">Ronda en curso</div>
+            <div class="subtitle">
+                Empieza dando pistas: <b>{{ speakerStartLabel }}</b>
+            </div>
             <div class="subtitle">Cuando termine, pasa a la siguiente ronda.</div>
 
             <button class="btn-primary" type="button" (click)="siguienteRonda()">

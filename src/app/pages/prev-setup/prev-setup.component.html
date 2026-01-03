@@ -12,26 +12,21 @@
 
     <section class="card">
       <label class="field">
+        <span class="label">Categoría</span>
+        <select class="input" [(ngModel)]="categorySelected">
+          <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
+        </select>
+        <small class="hint">Define el tipo de palabra de la ronda</small>
+      </label>
+
+      <label class="field">
         <span class="label">Número de jugadores</span>
-        <input
-          class="input"
-          type="number"
-          min="3"
-          max="20"
-          [(ngModel)]="playersCount"
-          (ngModelChange)="syncNames()"
-        />
+        <input class="input" type="number" min="3" max="20" [(ngModel)]="playersCount" (ngModelChange)="syncNames()" />
       </label>
 
       <label class="field">
         <span class="label">Número de impostores</span>
-        <input
-          class="input"
-          type="number"
-          min="1"
-          [max]="maxImpostors"
-          [(ngModel)]="impostorsCount"
-        />
+        <input class="input" type="number" min="1" [max]="maxImpostors" [(ngModel)]="impostorsCount" />
         <small class="hint">Máx: {{ maxImpostors }}</small>
       </label>
 
@@ -46,15 +41,9 @@
         <div class="names-title">Nombres de jugadores</div>
 
         <div class="names-grid">
-         <input
-  *ngFor="let n of playerNames; let i = index; trackBy: trackByIndex"
-  class="input"
-  type="text"
-  [placeholder]="'Jugador ' + (i + 1)"
-  [(ngModel)]="playerNames[i]"
-  [ngModelOptions]="{ standalone: true }"
-  maxlength="20"
-/>
+          <input *ngFor="let n of playerNames; let i = index; trackBy: trackByIndex" class="input" type="text"
+            [placeholder]="'Jugador ' + (i + 1)" [(ngModel)]="playerNames[i]" [ngModelOptions]="{ standalone: true }"
+            maxlength="20" />
 
         </div>
       </div>

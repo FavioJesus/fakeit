@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GameStateService } from '../../core/game-state.service';
-
+import { GameEngineService } from '../../core/game-engine.service'; // ✅
 @Component({
   selector: 'app-prev-setup',
   standalone: true,
@@ -16,11 +16,17 @@ export class PrevSetupComponent {
   impostorsCount = 1;
   useNames = false;
   playerNames: string[] = [];
-
+  categories: string[] = [];
+  categorySelected = '';
   constructor(
     private router: Router,
-    private gameState: GameStateService
-  ) {}
+    private gameState: GameStateService,
+        private engine: GameEngineService // ✅
+  ) {
+
+    this.categories = this.engine.getCategories();
+    this.categorySelected = this.categories[0] ?? '';
+  }
 
   get maxImpostors(): number {
     return Math.max(1, Math.floor(this.playersCount / 4));
@@ -53,13 +59,12 @@ export class PrevSetupComponent {
 }
 
 
-  guardarYContinuar() {
+   guardarYContinuar() {
     this.gameState.setSetup({
       playersCount: this.playersCount,
       impostorsCount: Math.min(this.impostorsCount, this.maxImpostors),
-      playerNames: this.useNames
-        ? this.playerNames.map(n => n.trim())
-        : []
+      category: this.categorySelected, // ✅
+      playerNames: this.useNames ? this.playerNames.map(n => n.trim()) : []
     });
 
     this.router.navigateByUrl('/game');
